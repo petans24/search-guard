@@ -15,7 +15,7 @@
     </prerequisites>
 
     <groupId>com.floragunn</groupId>
-    <artifactId>search-guard</artifactId>
+    <artifactId>search-guard-16</artifactId>
     <version>0.6-SNAPSHOT</version>
     <packaging>jar</packaging>
 
@@ -44,7 +44,7 @@
     </licenses>
 
     <properties>
-        <elasticsearch.version>1.5.2</elasticsearch.version>
+        <elasticsearch.version>1.6.0</elasticsearch.version>
         <apache.ds.version>2.0.0-M17</apache.ds.version>
         <apache.ds.api.version>1.0.0-M28</apache.ds.api.version>
         <path.delim>\\</path.delim>
