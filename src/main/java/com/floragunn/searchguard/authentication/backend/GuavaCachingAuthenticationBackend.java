@@ -51,7 +51,7 @@ public final class GuavaCachingAuthenticationBackend implements AuthenticationBa
             }
         };
 
-        cache = CacheBuilder.newBuilder().expireAfterWrite(24, TimeUnit.HOURS).build(loader);
+        cache = CacheBuilder.newBuilder().expireAfterWrite(24, TimeUnit.HOURS).recordStats().build(loader);
     }
 
     @Override
@@ -69,4 +69,15 @@ public final class GuavaCachingAuthenticationBackend implements AuthenticationBa
         }
     }
 
+    public long getHitCount() {
+    	return cache.stats().hitCount();
+    }
+    
+    public long getMissCount() {
+    	return cache.stats().missCount();
+    }
+    
+    public long getRequestCount() {
+    	return cache.stats().requestCount();
+    }
 }
