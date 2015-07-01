@@ -154,6 +154,7 @@ searchguard.authentication.settingsdb.user.michaeljackson: neverland
 # If plain text password should be hashed use this. Supported digests are: SHA1 SHA256 SHA384 SHA512 MD5
 #searchguard.authentication.settingsdb.digest: SHA1
 #searchguard.authentication.settingsdb.user.michaeljackson: 824d55e7a62b7ca8751dff346ffab845a8f26d08
+# Note: Passwords may not be null or empty, minimum length is one character
 #####################################################
 
 #####################################################

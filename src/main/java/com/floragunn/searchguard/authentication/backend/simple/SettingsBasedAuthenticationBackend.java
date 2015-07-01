@@ -20,6 +20,7 @@ package com.floragunn.searchguard.authentication.backend.simple;
 import java.util.Arrays;
 
 import org.apache.commons.codec.digest.DigestUtils;
+import org.apache.commons.lang.StringUtils;
 import org.elasticsearch.common.inject.Inject;
 import org.elasticsearch.common.settings.Settings;
 
@@ -40,41 +41,47 @@ public class SettingsBasedAuthenticationBackend implements NonCachingAuthenticat
     @Override
     public User authenticate(final com.floragunn.searchguard.authentication.AuthCredentials authCreds) throws AuthException {
         final String user = authCreds.getUsername();
-        final char[] password = authCreds.getPassword();
+        final String clearTextPassword = authCreds.getPassword() == null?null:new String(authCreds.getPassword());
         authCreds.clear();
-
-        String pass = settings.get(ConfigConstants.SEARCHGUARD_AUTHENTICATION_SETTINGSDB_USER + user, null);
+        
         String digest = settings.get(ConfigConstants.SEARCHGUARD_AUTHENTICATION_SETTINGSDB_DIGEST, null);
-
-        if (digest != null) {
-
-            digest = digest.toLowerCase();
-
-            switch (digest) {
-
-                case "sha":
-                case "sha1":
-                    pass = DigestUtils.sha1Hex(pass);
-                    break;
-                case "sha256":
-                    pass = DigestUtils.sha256Hex(pass);
-                    break;
-                case "sha384":
-                    pass = DigestUtils.sha384Hex(pass);
-                    break;
-                case "sha512":
-                    pass = DigestUtils.sha512Hex(pass);
-                    break;
-
-                default:
-                    pass = DigestUtils.md5Hex(pass);
-                    break;
-            }
-
-        }
-
-        if (pass != null && Arrays.equals(pass.toCharArray(), password)) {
-            return new User(user);
+        final String storedPasswordOrDigest = settings.get(ConfigConstants.SEARCHGUARD_AUTHENTICATION_SETTINGSDB_USER + user, null);
+        
+        if(!StringUtils.isEmpty(clearTextPassword) && !StringUtils.isEmpty(storedPasswordOrDigest)) {
+        
+        	String passwordOrHash = clearTextPassword;
+        	
+	        if (digest != null) {
+	
+	            digest = digest.toLowerCase();
+	
+	            switch (digest) {
+	
+	                case "sha":
+	                case "sha1":
+	                	passwordOrHash = DigestUtils.sha1Hex(clearTextPassword);
+	                    break;
+	                case "sha256":
+	                	passwordOrHash = DigestUtils.sha256Hex(clearTextPassword);
+	                    break;
+	                case "sha384":
+	                	passwordOrHash = DigestUtils.sha384Hex(clearTextPassword);
+	                    break;
+	                case "sha512":
+	                	passwordOrHash = DigestUtils.sha512Hex(clearTextPassword);
+	                    break;
+	
+	                default:
+	                	passwordOrHash = DigestUtils.md5Hex(clearTextPassword);
+	                    break;
+	            }
+	
+	        }
+	
+	        if (storedPasswordOrDigest.equals(passwordOrHash)) {
+	            return new User(user);
+	        }
+        
         }
 
         throw new AuthException("No user " + user + " or wrong password (digest: " + (digest == null ? "plain/none" : digest) + ")");

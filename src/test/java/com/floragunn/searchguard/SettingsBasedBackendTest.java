@@ -67,13 +67,13 @@ public class SettingsBasedBackendTest extends AbstractUnitTest {
 
         final Settings settings = ImmutableSettings.settingsBuilder()
                 .putArray("searchguard.authentication.authorization.settingsdb.roles.spock", "kolinahr", "starfleet", "command")
-                .put("searchguard.authentication.settingsdb.user.spock", "vulcan")
+                .put("searchguard.authentication.settingsdb.user.spock", "0c94ea3ecdd57ac44984589682e4be05")
                 .put("searchguard.authentication.settingsdb.digest", "md5").build();
 
         Assert.assertEquals(
                 "spock",
                 new SettingsBasedAuthenticationBackend(settings).authenticate(
-                        new AuthCredentials("spock", "0c94ea3ecdd57ac44984589682e4be05".toCharArray())).getName());
+                        new AuthCredentials("spock", "vulcan".toCharArray())).getName());
 
     }
 
@@ -82,13 +82,13 @@ public class SettingsBasedBackendTest extends AbstractUnitTest {
 
         final Settings settings = ImmutableSettings.settingsBuilder()
                 .putArray("searchguard.authentication.authorization.settingsdb.roles.spock", "kolinahr", "starfleet", "command")
-                .put("searchguard.authentication.settingsdb.user.spock", "vulcan")
+                .put("searchguard.authentication.settingsdb.user.spock", "966032eab6276624119a49080934e3936d2976f7")
                 .put("searchguard.authentication.settingsdb.digest", "sha1").build();
 
         Assert.assertEquals(
                 "spock",
                 new SettingsBasedAuthenticationBackend(settings).authenticate(
-                        new AuthCredentials("spock", "966032eab6276624119a49080934e3936d2976f7".toCharArray())).getName());
+                        new AuthCredentials("spock", "vulcan".toCharArray())).getName());
 
     }
 
@@ -97,10 +97,22 @@ public class SettingsBasedBackendTest extends AbstractUnitTest {
 
         final Settings settings = ImmutableSettings.settingsBuilder()
                 .putArray("searchguard.authentication.authorization.settingsdb.roles.spock", "kolinahr", "starfleet", "command")
-                .put("searchguard.authentication.settingsdb.user.spock", "vulcan")
+                .put("searchguard.authentication.settingsdb.user.spock", "966032eab6276624119a49080934e3936d2976f7")
                 .put("searchguard.authentication.settingsdb.digest", "sha1").build();
 
-        new SettingsBasedAuthenticationBackend(settings).authenticate(new AuthCredentials("spock", "vulcan".toCharArray()));
+        new SettingsBasedAuthenticationBackend(settings).authenticate(new AuthCredentials("spock", "wrong-password".toCharArray()));
+
+    }
+    
+    @Test(expected = AuthException.class)
+    public void testDigestSha1FailDigestAgain() throws Exception {
+
+        final Settings settings = ImmutableSettings.settingsBuilder()
+                .putArray("searchguard.authentication.authorization.settingsdb.roles.spock", "kolinahr", "starfleet", "command")
+                .put("searchguard.authentication.settingsdb.user.spock", "966032eab6276624119a49080934e3936d2976f7")
+                .put("searchguard.authentication.settingsdb.digest", "sha1").build();
+
+        new SettingsBasedAuthenticationBackend(settings).authenticate(new AuthCredentials("spock", "966032eab6276624119a49080934e3936d2976f7".toCharArray()));
 
     }
 
@@ -123,6 +135,28 @@ public class SettingsBasedBackendTest extends AbstractUnitTest {
                 .put("searchguard.authentication.settingsdb.user.spock", "vulcan").build();
 
         new SettingsBasedAuthenticationBackend(settings).authenticate(new AuthCredentials("spock", "secret".toCharArray()));
+
+    }
+    
+    @Test(expected = AuthException.class)
+    public void testFailNullPassword() throws Exception {
+
+        final Settings settings = ImmutableSettings.settingsBuilder()
+                .putArray("searchguard.authentication.authorization.settingsdb.roles.spock", "kolinahr", "starfleet", "command")
+                .build();
+
+        new SettingsBasedAuthenticationBackend(settings).authenticate(new AuthCredentials("spock", null));
+
+    }
+    
+    @Test(expected = AuthException.class)
+    public void testFailEmptyPassword() throws Exception {
+
+        final Settings settings = ImmutableSettings.settingsBuilder()
+                .putArray("searchguard.authentication.authorization.settingsdb.roles.spock", "kolinahr", "starfleet", "command")
+                .put("searchguard.authentication.settingsdb.user.spock", "").build();
+
+        new SettingsBasedAuthenticationBackend(settings).authenticate(new AuthCredentials("spock", "".toCharArray()));
 
     }
 
