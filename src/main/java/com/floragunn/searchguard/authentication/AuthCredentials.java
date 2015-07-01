@@ -24,6 +24,7 @@ public final class AuthCredentials {
     private final String username;
     private char[] password;
     private Object nativeCredentials;
+    private final int hashCode;
 
     public AuthCredentials(final String username, final Object nativeCredentials) {
         this(username, null, nativeCredentials);
@@ -36,6 +37,7 @@ public final class AuthCredentials {
     public AuthCredentials(final String username) {
         this(username, null, null);
     }
+    
 
     private AuthCredentials(final String username, char[] password, Object nativeCredentials) {
         super();
@@ -50,9 +52,11 @@ public final class AuthCredentials {
         password = null;
         this.nativeCredentials = nativeCredentials;
         nativeCredentials = null;
+        hashCode = hashCodeInternal();
     }
 
     public void clear() {
+    	
         if (password != null) {
             Arrays.fill(password, '\0');
             password = null;
@@ -76,6 +80,10 @@ public final class AuthCredentials {
 
     @Override
     public int hashCode() {
+        return hashCode;
+    }
+    
+    private int hashCodeInternal() {
         final int prime = 31;
         int result = 1;
         result = prime * result + ((nativeCredentials == null) ? 0 : nativeCredentials.hashCode());
@@ -95,25 +103,15 @@ public final class AuthCredentials {
         if (getClass() != obj.getClass()) {
             return false;
         }
-        final AuthCredentials other = (AuthCredentials) obj;
-        if (nativeCredentials == null) {
-            if (other.nativeCredentials != null) {
-                return false;
-            }
-        } else if (!nativeCredentials.equals(other.nativeCredentials)) {
-            return false;
-        }
-        if (!Arrays.equals(password, other.password)) {
-            return false;
-        }
-        if (username == null) {
-            if (other.username != null) {
-                return false;
-            }
-        } else if (!username.equals(other.username)) {
-            return false;
-        }
-        return true;
+        
+        return this.hashCode() == obj.hashCode();
     }
+
+	@Override
+	public String toString() {
+		return "AuthCredentials [username=" + username + ", hash="+ this.hashCode() +", hasPassword="
+				+ (password != null) + ", hasNativeCredentials="
+				+ (nativeCredentials != null) + "]";
+	}
 
 }
