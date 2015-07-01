@@ -28,6 +28,7 @@ import javax.crypto.spec.SecretKeySpec;
 
 import org.apache.commons.io.FileUtils;
 import org.elasticsearch.ElasticsearchException;
+import org.elasticsearch.Version;
 import org.elasticsearch.client.Client;
 import org.elasticsearch.common.component.AbstractLifecycleComponent;
 import org.elasticsearch.common.inject.Inject;
@@ -218,9 +219,7 @@ public class SearchGuardService extends AbstractLifecycleComponent<SearchGuardSe
         }
 
         //TODO FUTURE version compatibility
-        /* if(!Version.CURRENT.before(Version.V_1_4_2)) {
-             throw new ElasticsearchException("Wrong ES version, use 1.4.2 or later");
-         }*/
+        checkVersion((byte) 5);
 
         /*if (!filterRegistered) {
             throw new ElasticsearchException("No filter configured");
@@ -233,7 +232,13 @@ public class SearchGuardService extends AbstractLifecycleComponent<SearchGuardSe
 
     }
 
-    /*public String getSecurityConfigurationIndex() {
+    public static void checkVersion(byte minor) {
+	   if(Version.CURRENT.minor != minor) {
+            throw new ElasticsearchException("Wrong Elasticsearch version, this plugin only works with ES 1."+minor+".x - Please download or build the correct plugin version which matches your Elasticsearch version.");
+       }
+	}
+
+	/*public String getSecurityConfigurationIndex() {
         return securityConfigurationIndex;
     }*/
 

@@ -24,12 +24,14 @@ import io.searchbox.indices.mapping.PutMapping;
 import java.util.Map;
 
 import org.apache.http.HttpResponse;
+import org.elasticsearch.ElasticsearchException;
 import org.elasticsearch.common.collect.Tuple;
 import org.elasticsearch.common.settings.ImmutableSettings;
 import org.elasticsearch.common.settings.Settings;
 import org.junit.Assert;
 import org.junit.Test;
 
+import com.floragunn.searchguard.service.SearchGuardService;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
@@ -107,5 +109,24 @@ public class MiscTest extends AbstractUnitTest {
         log.debug(jr.getErrorMessage());
         Assert.assertTrue(jr.getErrorMessage().contains("to _all indices"));
 
+    }
+    
+    @Test
+    public void checkVersion() {
+    	SearchGuardService.checkVersion((byte) 5);
+    	
+    	try {
+			SearchGuardService.checkVersion((byte) 4);
+			Assert.fail();
+		} catch (ElasticsearchException e) {
+			//expected
+		}
+    	
+    	try {
+			SearchGuardService.checkVersion((byte) 6);
+			Assert.fail();
+		} catch (ElasticsearchException e) {
+			//expected
+		}
     }
 }
