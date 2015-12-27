@@ -1,0 +1,4 @@
+security.manager.enabled: false
+searchguard.authcz.admin_dn:
+  - cn=admin,ou=Test,ou=ou,dc=company,dc=com
+  - cn=smith,ou=IT,ou=IT,dc=company,dc=com

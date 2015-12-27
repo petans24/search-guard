@@ -1,0 +1,11 @@
+ALL:
+  - "*"
+WRITE:
+  - "indices:data/write*"
+READ:
+  - "indices:data/read*"
+DELETE:
+  - indices:data/write/delete
+CRUD:
+  - READ
+  - WRITE

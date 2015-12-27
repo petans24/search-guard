@@ -1,0 +1,31 @@
+sg_role_staff:
+  indices:
+    '*':
+      - '*' 
+  actions: 
+    - CRUD
+
+sg_role_captains:
+  indices:
+    '*':
+      - '*' 
+  actions: 
+    - ALL
+
+sg_role_vulcan_secrets:
+  indices:
+    'vulcan':
+      - 'secrets' 
+  actions: 
+    - ALL
+
+# not yet implemented  
+  dls:
+    query: '{"term" : {"$user.username" : "12"}}'
+  fls:
+    - field1.a
+    - field2.b
+    - field3.m.*
+  cluster:
+    - NORM
+    - cluster:aaa/nnn

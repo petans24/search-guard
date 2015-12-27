@@ -1,0 +1,30 @@
+searchguard:
+  dynamic:
+    authentication_internal:
+      enabled: true
+      order: 0
+      roles_only: false
+      authentication_backend:
+        type: com.floragunn.searchguard.auth.internal.InternalAuthenticationBackend
+      authorization_backend:
+        type: com.floragunn.searchguard.auth.internal.NoOpAuthorizationBackend
+      http_authenticator:
+        type: com.floragunn.searchguard.http.HTTPBasicAuthenticator
+    authentication_add_roles:
+      enabled: true
+      order: 3
+      roles_only: true
+      authorization_backend:
+        type: com.floragunn.searchguard.auth.internal.NoOpAuthorizationBackend
+    authentication_ldap:
+      enabled: false
+      order: 2
+      roles_only: true
+      authorization_backend:
+        type: ldap
+        ldap:
+          rolebase: ""
+  
+  #needs restart
+  static:
+    enabled: true

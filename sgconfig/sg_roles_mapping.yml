@@ -1,0 +1,16 @@
+sg_role_staff:
+  backendroles:
+    - staff
+  hosts:
+    - "*.starfleet.com"
+sg_role_captains:
+  backendroles:
+    - captain
+sg_role_kirk_only:
+  users:
+    - "kirk"
+sg_role_vulcan_secrets:
+  backendroles:
+    - vulcan
+  hosts:
+    - "*.vulcan.gov"
