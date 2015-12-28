@@ -23,7 +23,7 @@ We expect to release one or two more alpha versions in January 2016 and two beta
 * Install search-guard-2 plugin
  * ``sudo bin/plugin install com.floragunn/search-guard-2/2.1.0.0-alpha1``
 
-Bot plugins need to be installed on every node in the clsuter. Tribe nodes are not yet supported.
+Both plugins need to be installed on every node in the cluster. Tribe nodes are not yet supported.
 
 After the plugins are installed you need to configure them. ``search-guard-ssl`` needs to be configured statically
 in elasticsearch.yml (any change needs a restart of the node). See [search-guard-ssl documentation](https://github.com/floragunncom/search-guard-ssl) how to configure it. ``search-guard-2`` needs only a single entry in elasticsearch.yml (see below), all other configuration is stored in Elasticsearch itself and can be dynamically changed without restarting a node or the cluster.
@@ -46,7 +46,7 @@ There are generally two types of certificates you need to generate:
       - cn=admin,ou=Test,ou=ou,dc=company,dc=com
       - cn=smith,ou=IT,ou=IT,dc=company,dc=com
 
-``searchguard.authcz.admin_dn`` is a list of DN's which are allowed to perform administrative tasks (that is: read and write the ``searchguard`` index which holds the dynamic configuraion). The client certificate (keystore) used with the sgadmin tool have to match on of the configured DN's.
+``searchguard.authcz.admin_dn`` is a list of DN's which are allowed to perform administrative tasks (that is: read and write the ``searchguard`` index which holds the dynamic configuration). The client certificate (keystore) used with the sgadmin tool have to match on of the configured DN's.
 
 ###Dynamic configuration
 * sg_config.yml: Configure authenticators and authorization backends
@@ -63,7 +63,7 @@ Generate hashed passwords for sg_internal_users.yml:
 
     plugins/search-guard-2/tools/hasher.sh -p mycleartextpassword
 
-All this files are stored as documents in elasticsearch within the ``searchguard`` index.
+All this files are stored as documents in Elasticsearch within the ``searchguard`` index.
 This index is specially secured so that only a admin user with a special SSL certificate may write or read this index. Thats the reason why you need the sgadmin tool to update the configuration (that is loading the files into ES). 
 
 After one or more files are updated Search Guard will automatically reconfigure and the changes will take effect almost immediately. No need to restart ES nodes and deal with config files on the servers. The sgadmin tool can also be used fom a desktop machine as long ES servers are reachable through 9300 port (transport protocol).
@@ -72,7 +72,7 @@ After one or more files are updated Search Guard will automatically reconfigure 
 Search Guard is build upon search-guard-ssl, a plugin which enables and enforce transport protocol (node-to-node) encryption and mutual SSL authentication. This makes sure that only trusted nodes can join the cluster. If a client connects (either through HTTP/REST or TransportClient) the request will be associated with the authenticated user. The client have therefore to authenticate either via HTTP (only BASIC supported currently) or via PKI (mutual SSL) when connecting with the transport client. 
 
 ###Config hot reloading
-All configuration is held in elasticsearch itself and if if the configuration is updated (through sgadmin) then all nodes will be informed about the update and will reload the configuration. This has several advantages over configuration via elasticsearch.yml
+All configuration is held in Elasticsearch itself and if if the configuration is updated (through sgadmin) then all nodes will be informed about the update and will reload the configuration. This has several advantages over configuration via elasticsearch.yml
 
 * Configuration is held in a central place and therefore automatically identical for all nodes
 * Easy update, no dealing with files on different servers
