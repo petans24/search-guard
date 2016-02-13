@@ -2,6 +2,8 @@
 
 First alpha release for Search Guard 2 (compatible with Elasticsearch 2.1)
 
+Second alpha release for Search Guard 2 (compatible with Elasticsearch 2.2) is here: https://github.com/floragunncom/search-guard/tree/2.2
+
 ##Roadmap
 This is almost a complete rewrite of Search Guard 1 which comes with a lot of new features:
 
