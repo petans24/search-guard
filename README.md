@@ -1,7 +1,8 @@
 # Search Guard Security Plugin for ES 1.5
 Elasticsearch security for free.
 
-Search Guard is a free and open source plugin for Elasticsearch which provides security features.
+Search Guard is a free and open source plugin for Elasticsearch which provides security features. Currently only Elasticsearch 1.5, 1.6 and 1.7 is supported, Search Guard for Elasticsearch 2 is coming in Feb. 2016.
+Second alpha version for [Search Guard 2 is available here](https://github.com/floragunncom/search-guard/tree2.2) 
 
 
 ![Logo](https://raw.githubusercontent.com/floragunncom/sg-assets/master/logo/sg_logo_small.jpg) 
@@ -10,10 +11,10 @@ Search Guard is a free and open source plugin for Elasticsearch which provides s
 [![Build Status](https://travis-ci.org/floragunncom/search-guard.svg?branch=es1.5)](https://travis-ci.org/floragunncom/search-guard) [![Coverage Status](https://coveralls.io/repos/floragunncom/search-guard/badge.svg?branch=es1.5)](https://coveralls.io/r/floragunncom/search-guard?branch=es1.5)
 
 ##Other Versions
+* ES 2.2 https://github.com/floragunncom/search-guard/tree/2.2
 * ES 1.5 https://github.com/floragunncom/search-guard/tree/es1.5
 * ES 1.6 https://github.com/floragunncom/search-guard/tree/es1.6
 * ES 1.x https://github.com/floragunncom/search-guard/tree/master
-* ES 2.0 https://github.com/floragunncom/search-guard/tree/master2.0
 
 ##Support
 * Community support available via [google groups](https://groups.google.com/forum/#!forum/search-guard)
