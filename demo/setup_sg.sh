@@ -28,6 +28,8 @@ NETTY_NATIVE_VERSION=1.1.33.Fork12
 NETTY_NATIVE_CLASSIFIER=linux-x86_64
 wget -O netty-tcnative-$NETTY_NATIVE_VERSION-$NETTY_NATIVE_CLASSIFIER.jar https://search.maven.org/remotecontent?filepath=io/netty/netty-tcnative/$NETTY_NATIVE_VERSION/netty-tcnative-$NETTY_NATIVE_VERSION-$NETTY_NATIVE_CLASSIFIER.jar > /dev/null 2>&1
 
+wget -O dlic-search-guard-authbackend-ldap.jar https://oss.sonatype.org/content/repositories/snapshots/com/floragunn/dlic-search-guard-authbackend-ldap/2.0.0.0-SNAPSHOT/dlic-search-guard-authbackend-ldap-2.0.0.0-20160326.223427-1-jar-with-dependencies.jar > /dev/null 2>&1
+
 echo "Install Search Guard SSL Plugin"
 sudo $ES_BIN_DIR/plugin remove search-guard-ssl > /dev/null
 sudo $ES_BIN_DIR/plugin remove search-guard-2 > /dev/null
@@ -41,6 +43,7 @@ sudo $ES_BIN_DIR/plugin install mobz/elasticsearch-head
 
 echo "Install netty-tcnative for native Openssl support"
 cp netty-tcnative-$NETTY_NATIVE_VERSION-$NETTY_NATIVE_CLASSIFIER.jar $ES_PLUGIN_DIR/search-guard-ssl/
+#cp dlic-search-guard-authbackend-ldap.jar $ES_PLUGIN_DIR/search-guard-2/
 
 #SSL setup
 echo "searchguard.ssl.transport.enabled: true" > $ES_CONF_DIR/elasticsearch.yml

@@ -19,11 +19,19 @@ then
 	sudo add-apt-repository -y ppa:webupd8team/java > /dev/null 2>&1
 	sudo apt-get -yqq update > /dev/null 2>&1
 	echo "Install Oracle Java 8, libapr1 and openssl"
-	sudo apt-get -yqq install haveged libapr1 openssl wget git oracle-java8-installer oracle-java8-unlimited-jce-policy > /dev/null 2>&1
+	#oracle-java8-unlimited-jce-policy
+	sudo apt-get -yqq install haveged libapr1 openssl wget git oracle-java8-installer  > /dev/null 2>&1
 	#sudo apt-get -yqq install autoconf libtool libssl-dev libkrb5-dev python-dev python-pip haveged openssl wget git oracle-java8-installer oracle-java8-unlimited-jce-policy > /dev/null 2>&1
 	#sudo apt-get install -q -y -o Dpkg::Options::="--force-confdef" -o Dpkg::Options::="--force-confold" krb5-user > /dev/null 2>&1
 	# entropy generator
 	#haveged -w 1024 > /dev/null 2>&1
+	
+	echo "Install Elasticsearch, but don't start it yet"
+	sudo apt-get -yqq update > /dev/null 2>&1
+	sudo apt-get install -yqq elasticsearch=2.2.1 > /dev/null 2>&1
+    echo "Elasticsearch installed but not yet started"
+	
+	
 else
     echo "Packages and deps already installed"
     #########

@@ -18,6 +18,7 @@ echo "Start Elasticsearch on $(hostname)/$IP"
 
 while ! nc -z $IP 9200; do   
   sleep 0.1 # wait for 1/10 of the second before check again
+  echo .
 done
 
 echo "Elasticsearch now running on $(hostname)/$IP"
