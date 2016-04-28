@@ -1,10 +1,10 @@
 /*
  * Copyright 2015 floragunn UG (haftungsbeschränkt)
- * 
+ *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- * 
+ *
  *     http://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
@@ -12,7 +12,7 @@
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
- * 
+ *
  */
 
 package com.floragunn.searchguard.authentication.backend.simple;
@@ -45,7 +45,8 @@ public class SettingsBasedAuthenticationBackend implements NonCachingAuthenticat
 
         String pass = settings.get(ConfigConstants.SEARCHGUARD_AUTHENTICATION_SETTINGSDB_USER + user, null);
         String digest = settings.get(ConfigConstants.SEARCHGUARD_AUTHENTICATION_SETTINGSDB_DIGEST, null);
-
+        String pass_input = String.valueOf(password);
+        
         if (digest != null) {
 
             digest = digest.toLowerCase();
@@ -73,7 +74,7 @@ public class SettingsBasedAuthenticationBackend implements NonCachingAuthenticat
 
         }
 
-        if (pass != null && Arrays.equals(pass.toCharArray(), password)) {
+        if (pass != null && pass_input.equals(pass)) {
             return new User(user);
         }
 
