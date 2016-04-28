@@ -46,7 +46,7 @@ public class SettingsBasedAuthenticationBackend implements NonCachingAuthenticat
         String pass = settings.get(ConfigConstants.SEARCHGUARD_AUTHENTICATION_SETTINGSDB_USER + user, null);
         String digest = settings.get(ConfigConstants.SEARCHGUARD_AUTHENTICATION_SETTINGSDB_DIGEST, null);
         String pass_input = String.valueOf(password);
-        
+
         if (digest != null) {
 
             digest = digest.toLowerCase();
@@ -55,20 +55,20 @@ public class SettingsBasedAuthenticationBackend implements NonCachingAuthenticat
 
                 case "sha":
                 case "sha1":
-                    pass = DigestUtils.sha1Hex(pass);
+                    pass_input = DigestUtils.sha1Hex(pass_input);
                     break;
                 case "sha256":
-                    pass = DigestUtils.sha256Hex(pass);
+                    pass_input = DigestUtils.sha256Hex(pass_input);
                     break;
                 case "sha384":
-                    pass = DigestUtils.sha384Hex(pass);
+                    pass_input = DigestUtils.sha384Hex(pass_input);
                     break;
                 case "sha512":
-                    pass = DigestUtils.sha512Hex(pass);
+                    pass_input = DigestUtils.sha512Hex(pass_input);
                     break;
 
                 default:
-                    pass = DigestUtils.md5Hex(pass);
+                    pass_input = DigestUtils.md5Hex(pass_input);
                     break;
             }
 
